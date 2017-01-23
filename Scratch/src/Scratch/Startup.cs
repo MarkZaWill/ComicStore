@@ -31,7 +31,7 @@ namespace Scratch
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = "Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ComicDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
             // Add framework services.
             services.AddDbContext<ScratchDbContext>(options => options.UseSqlServer(connection));

@@ -15,10 +15,12 @@ namespace Scratch.Controllers
     //[Produces("application/json")]
     public class ComicalController : Controller
     {
-        private ScratchDbContext _context;
+        string connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ComicDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private ScratchDbContext context;
+         
         public ComicalController(ScratchDbContext context)
         {
-            context = _context;
+            this.context = context;
         }
        
             
@@ -29,27 +31,30 @@ namespace Scratch.Controllers
         public IActionResult Get(int DorkID)
 
         {
-            Console.WriteLine(_context);
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Dork dork = _context.Dorks.FirstOrDefault(m => m.DorkID == DorkID);
+            if (context == null){
+                return NotFound();
+            }
+            Dork dork = context.Dorks.FirstOrDefault(m => m.DorkID == DorkID);
 
-            IQueryable Query = from d in _context.Dorks
-                               join c in _context.Comics
-                        on d.DorkID equals c.DorkID
-                               select new
-                               {
-                                   d.FirstName,
-                                   d.LastName,
-                                   c.Character,
-                                   c.Issue        
-                                   //shipDate,
-                                   //TrackingNumber
-                               };
-            return Ok(Query);
+            //IQueryable Query = from d in context.Dorks
+            //                   join c in context.Comics
+            //            on d.DorkID equals c.DorkID
+            //                   select new
+            //                   {
+            //                       d.FirstName,
+            //                       d.LastName,
+            //                       c.Character,
+            //                       c.Issue        
+            //                       //shipDate,
+            //                       //TrackingNumber
+            //                   };
+            return Ok(dork);
 
         }
 
