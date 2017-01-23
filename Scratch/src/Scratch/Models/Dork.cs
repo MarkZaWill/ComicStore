@@ -12,5 +12,7 @@ namespace Scratch.Models
         public string LastName { get; set; }
 
         public string EmailAddress { get; set; }
+
+        public virtual List<Comic> Comics { get; set; }
     }
 }

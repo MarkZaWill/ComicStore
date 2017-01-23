@@ -14,7 +14,7 @@ namespace Scratch.Models
 
         public int DorkID { get; set; }
 
-    
+        public virtual int Dork {get; set;}
 
     }
 }

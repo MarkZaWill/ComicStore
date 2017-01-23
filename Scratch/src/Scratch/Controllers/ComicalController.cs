@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Scratch.Models;
-
+using Microsoft.Extensions.Options;
 
 namespace Scratch.Controllers
 {
@@ -15,8 +15,13 @@ namespace Scratch.Controllers
     //[Produces("application/json")]
     public class ComicalController : Controller
     {
-
-         ScratchDbContext _context = new ScratchDbContext();
+        private ScratchDbContext _context;
+        public ComicalController(ScratchDbContext context)
+        {
+            context = _context;
+        }
+       
+            
 
 
 
@@ -24,6 +29,7 @@ namespace Scratch.Controllers
         public IActionResult Get(int DorkID)
 
         {
+            Console.WriteLine(_context);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

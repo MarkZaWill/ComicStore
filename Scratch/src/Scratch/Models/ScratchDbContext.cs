@@ -8,8 +8,9 @@ namespace Scratch.Models
 {
     public class ScratchDbContext: DbContext
     {
-       
-        public DbSet<Comic> Comics { get; set; }
-        public DbSet<Dork> Dorks { get; set; }
+        public ScratchDbContext(DbContextOptions<ScratchDbContext> options) : base(options)
+        { }
+        public virtual DbSet<Comic> Comics { get; set; }
+        public virtual DbSet<Dork> Dorks { get; set; }
     }
 }
