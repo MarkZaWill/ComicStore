@@ -4,10 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Scratch.Models;
 using Microsoft.Extensions.Options;
+using System.IO;
+using System.Collections;
+using Microsoft.AspNetCore.Server.Kestrel.Internal.Networking;
+using static Scratch.Controllers.ComicalController;
 
 namespace Scratch.Controllers
 {
@@ -41,7 +46,8 @@ namespace Scratch.Controllers
                 return NotFound();
             }
             Dork dork = context.Dorks.FirstOrDefault(m => m.DorkID == DorkID);
-
+            string newDork = dork.ToString();
+            Post(newDork);
             //IQueryable Query = from d in context.Dorks
             //                   join c in context.Comics
             //            on d.DorkID equals c.DorkID
@@ -56,16 +62,17 @@ namespace Scratch.Controllers
             //                   };
             return Ok(dork);
 
+
         }
 
         [HttpPost]
+        //public IActionResult POST(int DorkID)
+        //{ 
 
-
-        public async Task<IEnumerable<string>> Post(IQueryable Query)
+        public async Task<IEnumerable<string>> Post(string dork)
         {
             var result = await GetExternalResponse();
-            string QueryString = Query.ToString();
-            return new string[] { result, QueryString };
+            return  new string[] { result, dork };
         }
 
         static string _address = "http://abn-nws-ftp.studio.internal.com:8080/swagger-ui.html";
@@ -76,8 +83,10 @@ namespace Scratch.Controllers
             var result = await response.Content.ReadAsStringAsync();
             return result;
         }
+    
 
-    }
-}
+            }
+
+            }
 
 
